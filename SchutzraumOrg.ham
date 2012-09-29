@@ -23,6 +23,7 @@ class ZivilSchuetzer extends Hamster
 class ZivilSchutzChef extends ZivilSchuetzer
 {
 	List<Tuersteher> tuersteher = new ArrayList<Tuersteher>();
+	boolean tuerAuf = false;
 	
 	void tuerAuf()
 	{
@@ -30,6 +31,12 @@ class ZivilSchutzChef extends ZivilSchuetzer
 		{
 			t.tuerAuf();
 		}
+	}
+	
+	void tuerZu()
+	{
+		for(Tuersteher t : tuersteher)
+			t.tuerZu();
 	}
 
 	void aufbieten()
@@ -53,8 +60,14 @@ class ZivilSchutzChef extends ZivilSchuetzer
 		while(true)
 		{
 			if(kornDa())
-			{ 	nimm();
-				tuerAuf();
+			{	nimm();
+				if(!tuerAuf)
+				{	tuerAuf();
+					tuerAuf=true;
+				}else{
+					tuerZu();
+					tuerAuf=false;
+				}	
 			}
 		}
 	}
@@ -105,5 +118,13 @@ class Tuersteher extends ZivilSchuetzer
 		rechtsUm();
 		vor();
 		linksUm();
+	}
+	
+	public void tuerZu()
+	{	linksUm();
+		vor();
+		linksUm();
+		vor();
+		kehrt();
 	}
 }
