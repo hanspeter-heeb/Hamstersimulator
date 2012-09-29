@@ -1,0 +1,109 @@
+/*object-oriented program*/import java.util.*;
+
+void main()
+{
+    ZivilSchutzChef zsc = new ZivilSchutzChef();
+	zsc.init(1,2,Hamster.OST,20);
+	zsc.aufbieten();
+}
+
+class ZivilSchuetzer extends Hamster
+{
+	void rechtsUm()
+	{ 	linksUm();
+	 	kehrt();
+	}
+
+	void kehrt()
+	{ linksUm();linksUm();
+	}
+}
+
+
+class ZivilSchutzChef extends ZivilSchuetzer
+{
+	List<Tuersteher> tuersteher = new ArrayList<Tuersteher>();
+	
+	void tuerAuf()
+	{
+		for(Tuersteher t : tuersteher)
+		{
+			t.tuerAuf();
+		}
+	}
+
+	void aufbieten()
+	{
+		while(getSpalte()!=1 || getReihe()!=1)
+		{
+			if(beiWand())
+				vor();
+			else if(inTuer())
+			{
+				tuerSteherPlazieren();
+				vor();
+			}
+			else
+			{
+				rechtsUm();
+				vor();
+			}
+		}
+		
+		while(true)
+		{
+			if(kornDa())
+			{ 	nimm();
+				tuerAuf();
+			}
+		}
+	}
+
+	boolean beiWand()
+	{	rechtsUm();
+		boolean b = !vornFrei();
+		linksUm();
+		return b;
+	}
+
+	boolean inTuer()
+	{	boolean b = false;
+		rechtsUm();
+		vor();
+		linksUm();
+		b = !vornFrei();
+		kehrt();
+		b &= !vornFrei();
+		rechtsUm();
+		vor();
+		rechtsUm();
+		return b;
+	}
+
+	void tuerSteherPlazieren()
+	{	Tuersteher tst = new Tuersteher();
+		tuersteher.add(tst);
+		int r,s,rtg;
+		r=this.getReihe();
+		s=this.getSpalte();
+		rtg=this.getBlickrichtung();
+		tst.init(r,s,rtg,0);
+		tst.inPosition();
+	}
+}
+
+class Tuersteher extends ZivilSchuetzer
+{
+	public void inPosition()
+	{	rechtsUm();
+		vor();
+		kehrt();
+	}
+	
+	public void tuerAuf()
+	{	vor();
+		rechtsUm();
+		vor();
+		linksUm();
+	}
+}

@@ -1,0 +1,6 @@
+/*object-oriented program*/void main() {
+    Hamster h = new Hamster();
+    h.init(1,2,3,10);
+    h.linksUm();
+    h.gib();
+}

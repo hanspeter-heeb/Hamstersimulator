@@ -1,0 +1,43 @@
+/*object-oriented program*/import java.util.*;
+
+void main() {
+    Bauer b = new Bauer();
+    b.init(0,2,Hamster.OST,0);
+    b.rekrutieren();
+    b.pfluecken();
+}
+
+class Pfluecker extends Hamster
+{
+	void pfluecke()
+	{
+		while(kornDa())
+		{
+			nimm();
+			vor();
+		}
+	}
+}
+
+class Bauer extends Hamster
+{
+	List<Pfluecker> polen = new Vector<Pfluecker>();
+	
+	void rekrutieren()
+	{
+		Pfluecker p = new Pfluecker();
+		p.init(2,2,Hamster.OST,0);
+		polen.add(p);
+		Pfluecker p1 = new Pfluecker();
+		p1.init(4,2,Hamster.OST,0);
+		polen.add(p1);
+	
+	}
+	void pfluecken()
+	{
+		for (Pfluecker p : polen) 
+		{
+			p.pfluecke();
+		}
+	}
+}
